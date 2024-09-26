@@ -1,4 +1,4 @@
-name: CI/CD
+name: CI
 
 on:
   push:
@@ -9,24 +9,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+        with:
+          fetch-depth: 2  # Descarga las últimas 2 commits
+      - name: Check for package.json
+        run: |
+          if [ ! -f package.json ]; then
+            echo "Error: package.json not found. Please verify the file exists and the path is correct."
+            exit 1
+          fi
       - name: Install dependencies
         run: npm install
       - name: Build
         run: npm run build
-
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - uses: actions/checkout@v3
-      - name: Create GitHub Pages branch
-        run: |
-          git checkout -b gh-pages
-          git push -u origin gh-pages
-        if: "!contains(github.ref, 'refs/heads/gh-pages')"
-      - name: Deploy to GitHub Pages
-        uses: actions/deploy@v1
-        with:
-          repository_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: gh-pages
-          folder: dist
