@@ -10,19 +10,14 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          fetch-depth: 2  # Descarga los últimos 2 commits
-
+          fetch-depth: 2  # Descarga las últimas 2 commits
       - name: Check for package.json
         run: |
-          if [ ! -f ./portafolio/portafolio/package.json ]; then
-            echo "Error: package.json not found in the portafolio/portafolio directory. Please verify the file exists and the path is correct."
+          if [ ! -f package.json ]; then
+            echo "Error: package.json not found. Please verify the file exists and the path is correct."
             exit 1
           fi
-
       - name: Install dependencies
         run: npm install
-        working-directory: ./portafolio/portafolio
-
       - name: Build
         run: npm run build
-        working-directory: ./portafolio/portafolio
