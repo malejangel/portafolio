@@ -12,20 +12,17 @@ jobs:
         with:
           fetch-depth: 2  # Descarga los últimos 2 commits
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '16'  # O la versión que necesites
-
       - name: Check for package.json
         run: |
-          if [ ! -f package.json ]; then
-            echo "Error: package.json not found. Please verify the file exists and the path is correct."
+          if [ ! -f ./portafolio/portafolio/package.json ]; then
+            echo "Error: package.json not found in the portafolio/portafolio directory. Please verify the file exists and the path is correct."
             exit 1
           fi
 
       - name: Install dependencies
         run: npm install
+        working-directory: ./portafolio/portafolio
 
       - name: Build
         run: npm run build
+        working-directory: ./portafolio/portafolio
