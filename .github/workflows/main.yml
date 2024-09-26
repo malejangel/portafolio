@@ -9,15 +9,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-        with:
-          fetch-depth: 2  # Descarga las últimas 2 commits
       - name: Check for package.json
         run: |
-          if [ ! -f portafolio/portafolio/package.json ]; then
+          if [ ! -f portafolio/package.json ]; then
             echo "Error: package.json not found. Please verify the file exists and the path is correct."
             exit 1
           fi
       - name: Install dependencies
-        run: npm install --prefix portafolio/portafolio
+        run: npm install --prefix portafolio
       - name: Build
-        run: npm run build --prefix portafolio/portafolio
+        run: npm run build --prefix portafolio
